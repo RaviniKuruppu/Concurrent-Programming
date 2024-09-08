@@ -5,35 +5,34 @@
 #include "mutex.h"
 #include "rw_lock.h"
 
-void calculateStats(double *cpu_time_list, int num_of_runs, double *mean, double *std_dev)
+void calculateStats(double *cpu_time_list, int num_of_sample, double *mean, double *std_dev)
 {
     double sum = 0.0;
     double sum_of_squared_diff = 0.0;
 
-    // Calculate the sum of all elements
-    for (int i = 0; i < num_of_runs; i++)
+    for (int i = 0; i < num_of_sample; i++)
     {
         sum += cpu_time_list[i];
     }
 
     // Calculate the mean (average)
-    *mean = sum / num_of_runs;
+    *mean = sum / num_of_sample;
 
-    // Calculate the sum of squared differences from the mean
-    for (int i = 0; i < num_of_runs; i++)
+    for (int i = 0; i < num_of_sample; i++)
     {
         sum_of_squared_diff += pow(cpu_time_list[i] - *mean, 2);
     }
 
     // Calculate the standard deviation
-    *std_dev = sqrt(sum_of_squared_diff / num_of_runs);
+    *std_dev = sqrt(sum_of_squared_diff / num_of_sample);
 }
 
 int main(){
-    unsigned long serial_runtime, mut_t1_runtime, mut_t2_runtime, mut_t4_runtime, mut_t8_runtime, rw_t1_runtime,  rw_t2_runtime, rw_t4_runtime, rw_t8_runtime;
-
     // Number of samples
     const int N = 4;
+    unsigned long serial_runtime[N], mut_t1_runtime[N], mut_t2_runtime[N], mut_t4_runtime[N], mut_t8_runtime[N], rw_t1_runtime[N],  rw_t2_runtime[N], rw_t4_runtime[N], rw_t8_runtime[N];
+
+    
 
     // Number of operations
     int m = 10000;
@@ -86,25 +85,41 @@ int main(){
 
         for (int j = 0; j < N; j++)
         {
-            serial_runtime = serialExecution(m, member_frac, insert_frac, delete_frac);
-            mut_t1_runtime = mutexExecution(m, member_frac, insert_frac, delete_frac, 1);
-            mut_t2_runtime = mutexExecution(m, member_frac, insert_frac, delete_frac, 2);
-            mut_t4_runtime = mutexExecution(m, member_frac, insert_frac, delete_frac, 4);
-            mut_t8_runtime = mutexExecution(m, member_frac, insert_frac, delete_frac, 8);
-            rw_t1_runtime = readWriteExecution(m, member_frac, insert_frac, delete_frac, 1);
-            rw_t2_runtime = readWriteExecution(m, member_frac, insert_frac, delete_frac, 2);
-            rw_t4_runtime = readWriteExecution(m, member_frac, insert_frac, delete_frac, 4);
-            rw_t8_runtime = readWriteExecution(m, member_frac, insert_frac, delete_frac, 8);
-            cpu_time_list[j]=serial_runtime;
+            serial_runtime[j] = serialExecution(m, member_frac, insert_frac, delete_frac);
+            mut_t1_runtime[j] = mutexExecution(m, member_frac, insert_frac, delete_frac, 1);
+            mut_t2_runtime[j] = mutexExecution(m, member_frac, insert_frac, delete_frac, 2);
+            mut_t4_runtime[j] = mutexExecution(m, member_frac, insert_frac, delete_frac, 4);
+            mut_t8_runtime[j] = mutexExecution(m, member_frac, insert_frac, delete_frac, 8);
+            rw_t1_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 1);
+            rw_t2_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 2);
+            rw_t4_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 4);
+            rw_t8_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 8);
+            //cpu_time_list[j]=serial_runtime;
 
-            fprintf(file,"%lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu\n",serial_runtime, mut_t1_runtime, mut_t2_runtime, mut_t4_runtime, mut_t8_runtime, rw_t1_runtime,  rw_t2_runtime, rw_t4_runtime, rw_t8_runtime);
+            fprintf(file,"%lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu\n",serial_runtime[j], mut_t1_runtime[j], mut_t2_runtime[j], mut_t4_runtime[j], mut_t8_runtime[j], rw_t1_runtime[j],  rw_t2_runtime[j], rw_t4_runtime[j], rw_t8_runtime[j]);
         }
-        printf("----------------------------- Case %d completed -----------------------------", i);
-        // Calculate mean and standard deviation
-        calculateStats(cpu_time_list, N, &mean, &std_dev);
-        // Print the results
-        printf("Mean (Average): %f\n", mean);
-        printf("Standard Deviation: %f\n", std_dev);
+        
+        // Array of names for labeling the outputs
+        const char *labels[] = {"Serial", "Mutex_t1", "Mutex_t2", "Mutex_t4", "Mutex_t8", "ReadWrite_t1", "ReadWrite_t2", "ReadWrite_t4", "ReadWrite_t8"};
+        unsigned long *runtime_arrays[] = {serial_runtime, mut_t1_runtime, mut_t2_runtime, mut_t4_runtime, mut_t8_runtime, rw_t1_runtime, rw_t2_runtime, rw_t4_runtime, rw_t8_runtime};
+
+        // Loop over each runtime array, calculate stats, and print the results
+        for (int k = 0; k < 9; k++) {
+            // Copy runtime values to the double array for statistics calculation
+            for (int j = 0; j < N; j++) {
+                cpu_time_list[j] = (double)runtime_arrays[k][j];  // Convert unsigned long to double
+            }
+
+            // Calculate mean and standard deviation
+            calculateStats(cpu_time_list, N, &mean, &std_dev);
+
+            // Print the results
+            printf("%s:\n", labels[k]);
+            printf("Mean (Average): %f\n", mean);
+            printf("Standard Deviation: %f\n", std_dev);
+        }
+        printf("----------------------------- Case %d completed -----------------------------", i+1);
+
         fclose(file);
     }
     return 0;
