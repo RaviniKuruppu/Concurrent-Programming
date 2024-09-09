@@ -59,6 +59,6 @@ unsigned long serialExecution(int total_operations, int member_frac, int insert_
     //printf("Time taken: %lu μs\n", time);
 
     Destructor(head);
-    printf("Serial run complete\n");
+    //printf("Serial run complete\n");
     return time;
 }
