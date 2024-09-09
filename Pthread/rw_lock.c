@@ -70,7 +70,7 @@ unsigned long readWriteExecution(int total_operations, int member_frac, int inse
     //printf("Time taken: %lu μs\n", time);
 
     Destructor(thread_data.head);
-    printf("RW lock run complete\n");
+    //printf("RW lock run complete\n");
     return time;
 }
 

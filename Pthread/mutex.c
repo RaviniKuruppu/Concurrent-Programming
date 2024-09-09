@@ -66,7 +66,7 @@ unsigned long mutexExecution(int total_operations, int member_frac, int insert_f
     //printf("Time taken: %lu μs\n", time);
 
     Destructor(thread_data.head);
-    printf("Mutex run complete\n");
+    //printf("Mutex run complete\n");
     return time;
 }
 
