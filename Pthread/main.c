@@ -29,7 +29,7 @@ void calculateStats(double *cpu_time_list, int num_of_sample, double *mean, doub
 
 int main(){
     // Number of samples
-    const int N = 4;
+    const int N = 400;
     unsigned long serial_runtime[N], mut_t1_runtime[N], mut_t2_runtime[N], mut_t4_runtime[N], mut_t8_runtime[N], rw_t1_runtime[N],  rw_t2_runtime[N], rw_t4_runtime[N], rw_t8_runtime[N];
 
     
@@ -113,10 +113,15 @@ int main(){
             // Calculate mean and standard deviation
             calculateStats(cpu_time_list, N, &mean, &std_dev);
 
+            // Calculate number of samples needed to achieve 95% confidence level and 5% margin of error
+            double x = (100 * 1.96 * std_dev) / (5 * mean);
+            double samples = ceil(pow(x, 2));
+
             // Print the results
             printf("%s:\n", labels[k]);
             printf("Mean (Average): %f\n", mean);
             printf("Standard Deviation: %f\n", std_dev);
+            printf("Number of Samples: %f\n", samples);
         }
         printf("----------------------------- Case %d completed -----------------------------", i+1);
 
