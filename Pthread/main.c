@@ -50,7 +50,7 @@ int main(){
     // Use current time as seed for random generator
     srand(time(0));
 
-    FILE *file;
+
 
     // Iterate for the 3 cases
     for (int i = 0; i < 3; i++) {

@@ -1,4 +1,6 @@
 Use "make" command for build.
 Use "./myprogram" command for run the program.
-Output csv files will be saved in output directory.
-csv files will contain the execution times in micro seconds.
+Execution time is in micro seconds.
+This print the Mean, Standard deviation and 
+the number of samples needed to achieve 95% confidence level and 5% margin of error
+on the command line.
