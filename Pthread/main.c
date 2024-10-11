@@ -56,24 +56,18 @@ int main(){
     for (int i = 0; i < 3; i++) {
         switch (i) {
             case 0:
-                file = fopen("output/Case_1.csv","w+");
-                fprintf(file,"Serial, Mutex_t1, Mutex_t2, Mutex_t4, Mutex_t8, ReadWrite_t1, ReadWrite_t2, ReadWrite_t4, ReadWrite_t8\n");
                 member_frac = lround(m * 0.99);
                 insert_frac = lround(m * 0.005);
                 delete_frac = lround(m * 0.005);
                 break;
 
             case 1:
-                file = fopen("output/Case_2.csv","w+");
-                fprintf(file,"Serial, Mutex_t1, Mutex_t2, Mutex_t4, Mutex_t8, ReadWrite_t1, ReadWrite_t2, ReadWrite_t4, ReadWrite_t8\n");
                 member_frac = lround(m * 0.9);
                 insert_frac = lround(m * 0.05);
                 delete_frac = lround(m * 0.05);
                 break;
 
             case 2:
-                file = fopen("output/Case_3.csv","w+");
-                fprintf(file,"Serial, Mutex_t1, Mutex_t2, Mutex_t4, Mutex_t8, ReadWrite_t1, ReadWrite_t2, ReadWrite_t4, ReadWrite_t8\n");
                 member_frac = lround(m * 0.5);
                 insert_frac = lround(m * 0.25);
                 delete_frac = lround(m * 0.25);
@@ -94,9 +88,6 @@ int main(){
             rw_t2_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 2);
             rw_t4_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 4);
             rw_t8_runtime[j] = readWriteExecution(m, member_frac, insert_frac, delete_frac, 8);
-            //cpu_time_list[j]=serial_runtime;
-
-            fprintf(file,"%lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu, %lu\n",serial_runtime[j], mut_t1_runtime[j], mut_t2_runtime[j], mut_t4_runtime[j], mut_t8_runtime[j], rw_t1_runtime[j],  rw_t2_runtime[j], rw_t4_runtime[j], rw_t8_runtime[j]);
         }
         
         // Array of names for labeling the outputs
@@ -125,7 +116,6 @@ int main(){
         }
         printf("----------------------------- Case %d completed -----------------------------", i+1);
 
-        fclose(file);
     }
     return 0;
 }
