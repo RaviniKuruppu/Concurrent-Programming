@@ -1,6 +1,5 @@
 Use "make" command for build.
 Use "./myprogram" command for run the program.
 Execution time is in micro seconds.
-This print the Mean, Standard deviation and 
-the number of samples needed to achieve 95% confidence level and 5% margin of error
+This print the Mean and Standard deviation 
 on the command line.
