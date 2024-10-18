@@ -1,0 +1,3 @@
+To run the program
+In the terminal enter `javac BusRiderProblem.java`
+Next run the compiled program by entering `java BusRiderProblem`
