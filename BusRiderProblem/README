@@ -3,4 +3,4 @@ In the terminal enter `javac BusRiderProblem.java`
 Next run the compiled program by entering `java BusRiderProblem`
 
 This program uses synchronization code that enforces all of the constraints in the Senate Bus Problem and will continue running until it is manually terminated.
-Note that lines 114 and 118 of BusRiderProblem.java can be uncommented to print the waiting and boarding activity of each rider for better understanding.
+Note that lines 113 and 117 of BusRiderProblem.java can be uncommented to print the waiting and boarding activity of each rider for better understanding.
