@@ -82,7 +82,7 @@ public class BusRiderProblem {
         }
 
         private void depart() {
-            System.out.println("Bus departed with " + waiting + " riders remaining.");
+            System.out.println("Bus departed with " + waiting + " riders remaining.\n");
         }
     }
 
