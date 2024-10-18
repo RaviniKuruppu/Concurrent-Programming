@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BusRiderProblem {
     private static Semaphore mutex = new Semaphore(1); // Protect shared variables
@@ -86,6 +87,14 @@ public class BusRiderProblem {
     }
 
     static class Rider implements Runnable {
+        // Static counter to generate unique incremental IDs
+        private static final AtomicInteger idCounter = new AtomicInteger(1);
+        private final int riderId; // Unique ID for each rider
+
+        Rider() {
+            this.riderId = idCounter.getAndIncrement();
+        }
+
         @Override
         public void run() {
             try {
@@ -102,11 +111,11 @@ public class BusRiderProblem {
         }
 
         private void waitForTheBus() {
-            System.out.println("Rider waiting." + " Total riders waiting: " + waiting);
+            System.out.println("Rider (ID:"+ this.riderId + ") waiting." + " Total riders waiting: " + waiting);
         }
 
         private void board() {
-            System.out.println("Rider boarded");
+            System.out.println("Rider (ID:"+ this.riderId + ") boarded");
         }
     }
 }
