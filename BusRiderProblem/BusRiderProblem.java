@@ -111,11 +111,11 @@ public class BusRiderProblem {
         }
 
         private void waitForTheBus() {
-            System.out.println("Rider (ID:"+ this.riderId + ") waiting." + " Total riders waiting: " + waiting);
+        //    System.out.println("Rider (ID:"+ this.riderId + ") waiting." + " Total riders waiting: " + waiting);
         }
 
         private void board() {
-            System.out.println("Rider (ID:"+ this.riderId + ") boarded");
+        //    System.out.println("Rider (ID:"+ this.riderId + ") boarded");
         }
     }
 }
